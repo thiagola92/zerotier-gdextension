@@ -18,7 +18,16 @@ public:
 	ZeroTierNode();
 	~ZeroTierNode();
 
-	void start();
+	int start();
+	int stop();
+	bool is_online();
+	uint64_t get_id();
+
+	int join_network(uint64_t networkd_id);
+	int leave_network(uint64_t networkd_id);
+	bool network_transport_is_ready(uint64_t networkd_id);
+	String get_ipv4_address(uint64_t networkd_id);
+	String get_ipv6_address(uint64_t networkd_id);
 };
 
 } //namespace godot
