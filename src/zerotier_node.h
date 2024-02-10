@@ -1,6 +1,8 @@
 #ifndef ZEROTIERNODE_H
 #define ZEROTIERNODE_H
 
+#include "zerotier/ZeroTierSockets.h"
+
 #include <godot_cpp/classes/ref_counted.hpp>
 
 namespace godot {
@@ -15,6 +17,8 @@ protected:
 public:
 	ZeroTierNode();
 	~ZeroTierNode();
+
+	void start();
 };
 
 } //namespace godot
