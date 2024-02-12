@@ -1,15 +1,5 @@
 # godtier-extension
-This repository is used to generate the GDExtension
-
-
-# Submodules
-- `godot-cpp` submodule responsible to generate the GDExtension.
-- `godtier` submodule responsible for testing the GDExtension.
-
-### Update submodules 
-```bash
-git submodule update --remote # Pull changes from repository
-```
+This repository is used to generate the godtier GDExtension.  
 
 ### Compile Debug
 ```bash
@@ -20,6 +10,17 @@ scons
 ```bash
 scons target=template_release
 ```
+
+# Submodules
+- `godot-cpp` submodule responsible to generate the GDExtension.
+- `godtier` submodule responsible for testing the GDExtension.
+
+### Update submodules
+```bash
+git submodule update --remote # Pull changes from repository
+```
+
+Still need to commit this repository with the changes (`git add`, `git commit`).  
 
 # references
 - https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/what_is_gdextension.html
