@@ -1,11 +1,24 @@
 # godtier-extension
-This repository is used to generate the GDExtension, here we have:
+This repository is used to generate the GDExtension
+
+
+# Submodules
 - `godot-cpp` submodule responsible to generate the GDExtension.
 - `godtier` submodule responsible for testing the GDExtension.
 
-To compile for your platform, calling SCons is more than enough:  
+### Update submodules 
+```bash
+git submodule update --remote # Pull changes from repository
 ```
+
+### Compile Debug
+```bash
 scons
+```
+
+### Compile Release
+```bash
+scons target=template_release
 ```
 
 # references
