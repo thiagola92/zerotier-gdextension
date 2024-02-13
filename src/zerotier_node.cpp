@@ -22,7 +22,15 @@ void ZeroTierNode::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_ipv4_address"), &ZeroTierNode::get_ipv4_address);
 	ClassDB::bind_method(D_METHOD("get_ipv6_address"), &ZeroTierNode::get_ipv6_address);
 
-	ADD_SIGNAL(MethodInfo("online", PropertyInfo(Variant::INT, "id")));
+	ADD_SIGNAL(MethodInfo("online"));
+	ADD_SIGNAL(MethodInfo("offline"));
+	ADD_SIGNAL(MethodInfo("down"));
+	ADD_SIGNAL(MethodInfo("joined_network"));
+	ADD_SIGNAL(MethodInfo("denied_network_access"));
+	ADD_SIGNAL(MethodInfo("received_ipv4"));
+	ADD_SIGNAL(MethodInfo("received_ipv6"));
+	ADD_SIGNAL(MethodInfo("network_down"));
+	ADD_SIGNAL(MethodInfo("network_updated"));
 }
 
 ZeroTierNode::ZeroTierNode() {
@@ -32,21 +40,51 @@ ZeroTierNode::~ZeroTierNode() {
 }
 
 void ZeroTierNode::on_event(void *msg_ptr) {
-	if (singleton == nullptr) {
-		return;
-	}
-
 	zts_event_msg_t *msg = (zts_event_msg_t *)msg_ptr;
 
-	printf("ON_EVENT");
-	if (msg->event_code == ZTS_EVENT_NODE_ONLINE) {
-		singleton->emit_signal("online", Variant(msg->node->node_id));
+	switch (msg->event_code) {
+		case ZTS_EVENT_NODE_ONLINE:
+			singleton->emit_signal("online");
+			break;
+		case ZTS_EVENT_NODE_OFFLINE:
+			singleton->emit_signal("offline");
+			break;
+		case ZTS_EVENT_NODE_DOWN:
+			singleton->emit_signal("down");
+			break;
+		case ZTS_EVENT_NETWORK_NOT_FOUND:
+			break;
+		case ZTS_EVENT_NETWORK_CLIENT_TOO_OLD:
+			break;
+		case ZTS_EVENT_NETWORK_REQ_CONFIG:
+			break;
+		case ZTS_EVENT_NETWORK_OK:
+			singleton->emit_signal("joined_network");
+			break;
+		case ZTS_EVENT_NETWORK_ACCESS_DENIED:
+			singleton->emit_signal("denied_network_access");
+			break;
+		case ZTS_EVENT_NETWORK_READY_IP4:
+			singleton->emit_signal("received_ipv4");
+			break;
+		case ZTS_EVENT_NETWORK_READY_IP6:
+			singleton->emit_signal("received_ipv6");
+			break;
+		case ZTS_EVENT_NETWORK_DOWN:
+			singleton->emit_signal("network_down");
+			break;
+		case ZTS_EVENT_NETWORK_UPDATE:
+			singleton->emit_signal("network_updated");
+			break;
+		default:
+			break;
 	}
 }
 
 ZeroTierNode *ZeroTierNode::get_singleton() {
 	if (singleton == nullptr) {
 		singleton = memnew(ZeroTierNode);
+		zts_init_set_event_handler((void (*)(void *)) & on_event);
 	}
 
 	return singleton;
@@ -61,7 +99,6 @@ int ZeroTierNode::init_from_memory(String key) {
 }
 
 int ZeroTierNode::start() {
-	zts_init_set_event_handler((void (*)(void *)) & on_event);
 	return zts_node_start();
 }
 
