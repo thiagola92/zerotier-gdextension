@@ -5,3 +5,6 @@
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp.git
 	branch = 4.2
+[submodule "libzt"]
+	path = libzt
+	url = https://github.com/zerotier/libzt.git
