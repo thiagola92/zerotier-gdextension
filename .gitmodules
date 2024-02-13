@@ -1,6 +1,3 @@
-[submodule "godot-cpp"]
-	path = godot-cpp
-	url = https://github.com/godotengine/godot-cpp
 [submodule "godtier"]
 	path = godtier
 	url = https://github.com/thiagola92/godtier.git
