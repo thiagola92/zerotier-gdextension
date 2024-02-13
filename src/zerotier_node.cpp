@@ -4,7 +4,12 @@
 
 using namespace godot;
 
+// https://refactoring.guru/design-patterns/singleton/cpp/example
+ZeroTierNode *ZeroTierNode::singleton = nullptr;
+
 void ZeroTierNode::_bind_methods() {
+	ClassDB::bind_static_method("ZeroTierNode", D_METHOD("get_singleton"), &ZeroTierNode::get_singleton);
+
 	ClassDB::bind_method(D_METHOD("init_from_storage"), &ZeroTierNode::init_from_storage);
 	ClassDB::bind_method(D_METHOD("init_from_memory"), &ZeroTierNode::init_from_memory);
 	ClassDB::bind_method(D_METHOD("start"), &ZeroTierNode::start);
@@ -16,12 +21,35 @@ void ZeroTierNode::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("network_transport_is_ready"), &ZeroTierNode::network_transport_is_ready);
 	ClassDB::bind_method(D_METHOD("get_ipv4_address"), &ZeroTierNode::get_ipv4_address);
 	ClassDB::bind_method(D_METHOD("get_ipv6_address"), &ZeroTierNode::get_ipv6_address);
+
+	ADD_SIGNAL(MethodInfo("online", PropertyInfo(Variant::INT, "id")));
 }
 
 ZeroTierNode::ZeroTierNode() {
 }
 
 ZeroTierNode::~ZeroTierNode() {
+}
+
+void ZeroTierNode::on_event(void *msg_ptr) {
+	if (singleton == nullptr) {
+		return;
+	}
+
+	zts_event_msg_t *msg = (zts_event_msg_t *)msg_ptr;
+
+	printf("ON_EVENT");
+	if (msg->event_code == ZTS_EVENT_NODE_ONLINE) {
+		singleton->emit_signal("online", Variant(msg->node->node_id));
+	}
+}
+
+ZeroTierNode *ZeroTierNode::get_singleton() {
+	if (singleton == nullptr) {
+		singleton = memnew(ZeroTierNode);
+	}
+
+	return singleton;
 }
 
 int ZeroTierNode::init_from_storage(String path) {
@@ -33,6 +61,7 @@ int ZeroTierNode::init_from_memory(String key) {
 }
 
 int ZeroTierNode::start() {
+	zts_init_set_event_handler((void (*)(void *)) & on_event);
 	return zts_node_start();
 }
 

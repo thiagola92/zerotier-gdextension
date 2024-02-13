@@ -13,7 +13,7 @@ void initialize_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_class<ZeroTierNode>();
+	ClassDB::register_abstract_class<ZeroTierNode>();
 }
 
 void uninitialize_module(ModuleInitializationLevel p_level) {

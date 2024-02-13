@@ -3,20 +3,26 @@
 
 #include "zerotier/ZeroTierSockets.h"
 
-#include <godot_cpp/classes/ref_counted.hpp>
+#include <godot_cpp/classes/object.hpp>
 
 namespace godot {
 
-class ZeroTierNode : public RefCounted {
-	GDCLASS(ZeroTierNode, RefCounted)
+class ZeroTierNode : public Object {
+	GDCLASS(ZeroTierNode, Object)
 
 private:
+	static ZeroTierNode *singleton;
+
+	ZeroTierNode();
+	~ZeroTierNode();
+
+	static void on_event(void *msg_ptr);
+
 protected:
 	static void _bind_methods();
 
 public:
-	ZeroTierNode();
-	~ZeroTierNode();
+	static ZeroTierNode *get_singleton();
 
 	int init_from_storage(String path);
 	int init_from_memory(String key);
