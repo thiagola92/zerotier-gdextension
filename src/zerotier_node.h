@@ -18,6 +18,9 @@ public:
 	ZeroTierNode();
 	~ZeroTierNode();
 
+	int init_from_storage(String path);
+	int init_from_memory(String key);
+
 	int start();
 	int stop();
 	bool is_online();
@@ -26,6 +29,7 @@ public:
 	int join_network(uint64_t networkd_id);
 	int leave_network(uint64_t networkd_id);
 	bool network_transport_is_ready(uint64_t networkd_id);
+
 	String get_ipv4_address(uint64_t networkd_id);
 	String get_ipv6_address(uint64_t networkd_id);
 };

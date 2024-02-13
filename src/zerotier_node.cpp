@@ -5,6 +5,8 @@
 using namespace godot;
 
 void ZeroTierNode::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("init_from_storage"), &ZeroTierNode::init_from_storage);
+	ClassDB::bind_method(D_METHOD("init_from_memory"), &ZeroTierNode::init_from_memory);
 	ClassDB::bind_method(D_METHOD("start"), &ZeroTierNode::start);
 	ClassDB::bind_method(D_METHOD("stop"), &ZeroTierNode::stop);
 	ClassDB::bind_method(D_METHOD("is_online"), &ZeroTierNode::is_online);
@@ -20,6 +22,14 @@ ZeroTierNode::ZeroTierNode() {
 }
 
 ZeroTierNode::~ZeroTierNode() {
+}
+
+int ZeroTierNode::init_from_storage(String path) {
+	return zts_init_from_storage((char *)&path);
+}
+
+int ZeroTierNode::init_from_memory(String key) {
+	return zts_init_from_memory((char *)&key, key.length());
 }
 
 int ZeroTierNode::start() {
