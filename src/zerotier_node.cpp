@@ -7,38 +7,6 @@ using namespace godot;
 // https://refactoring.guru/design-patterns/singleton/cpp/example
 ZeroTierNode *ZeroTierNode::singleton = nullptr;
 
-void ZeroTierNode::_bind_methods() {
-	ClassDB::bind_static_method("ZeroTierNode", D_METHOD("get_singleton"), &ZeroTierNode::get_singleton);
-
-	ClassDB::bind_method(D_METHOD("init_from_storage"), &ZeroTierNode::init_from_storage);
-	ClassDB::bind_method(D_METHOD("init_from_memory"), &ZeroTierNode::init_from_memory);
-	ClassDB::bind_method(D_METHOD("start"), &ZeroTierNode::start);
-	ClassDB::bind_method(D_METHOD("stop"), &ZeroTierNode::stop);
-	ClassDB::bind_method(D_METHOD("is_online"), &ZeroTierNode::is_online);
-	ClassDB::bind_method(D_METHOD("get_id"), &ZeroTierNode::get_id);
-	ClassDB::bind_method(D_METHOD("join_network"), &ZeroTierNode::join_network);
-	ClassDB::bind_method(D_METHOD("leave_network"), &ZeroTierNode::leave_network);
-	ClassDB::bind_method(D_METHOD("network_transport_is_ready"), &ZeroTierNode::network_transport_is_ready);
-	ClassDB::bind_method(D_METHOD("get_ipv4_address"), &ZeroTierNode::get_ipv4_address);
-	ClassDB::bind_method(D_METHOD("get_ipv6_address"), &ZeroTierNode::get_ipv6_address);
-
-	ADD_SIGNAL(MethodInfo("online"));
-	ADD_SIGNAL(MethodInfo("offline"));
-	ADD_SIGNAL(MethodInfo("down"));
-	ADD_SIGNAL(MethodInfo("joined_network"));
-	ADD_SIGNAL(MethodInfo("denied_network_access"));
-	ADD_SIGNAL(MethodInfo("received_ipv4"));
-	ADD_SIGNAL(MethodInfo("received_ipv6"));
-	ADD_SIGNAL(MethodInfo("network_down"));
-	ADD_SIGNAL(MethodInfo("network_updated"));
-}
-
-ZeroTierNode::ZeroTierNode() {
-}
-
-ZeroTierNode::~ZeroTierNode() {
-}
-
 void ZeroTierNode::on_event(void *msg_ptr) {
 	zts_event_msg_t *msg = (zts_event_msg_t *)msg_ptr;
 
@@ -76,7 +44,53 @@ void ZeroTierNode::on_event(void *msg_ptr) {
 		case ZTS_EVENT_NETWORK_UPDATE:
 			singleton->emit_signal("network_updated");
 			break;
-		default:
+		case ZTS_EVENT_PEER_DIRECT:
+			singleton->emit_signal("directed_p2p");
+			break;
+		case ZTS_EVENT_PEER_RELAY:
+			singleton->emit_signal("relayed_p2p");
+			break;
+		case ZTS_EVENT_PEER_UNREACHABLE:
+			singleton->emit_signal("unreachable_p2p");
+			break;
+		case ZTS_EVENT_PEER_PATH_DISCOVERED:
+			singleton->emit_signal("discovered_p2p");
+			break;
+		case ZTS_EVENT_PEER_PATH_DEAD:
+			singleton->emit_signal("dead_p2p");
+			break;
+		case ZTS_EVENT_ROUTE_ADDED:
+			singleton->emit_signal("added_route");
+			break;
+		case ZTS_EVENT_ROUTE_REMOVED:
+			singleton->emit_signal("removed_route");
+			break;
+		case ZTS_EVENT_ADDR_ADDED_IP4:
+			singleton->emit_signal("received_new_ipv4");
+			break;
+		case ZTS_EVENT_ADDR_REMOVED_IP4:
+			singleton->emit_signal("removed_ipv4");
+			break;
+		case ZTS_EVENT_ADDR_ADDED_IP6:
+			singleton->emit_signal("received_new_ipv6");
+			break;
+		case ZTS_EVENT_ADDR_REMOVED_IP6:
+			singleton->emit_signal("removed_ipv6");
+			break;
+		case ZTS_EVENT_STORE_IDENTITY_SECRET:
+			singleton->emit_signal("secret_key_stored");
+			break;
+		case ZTS_EVENT_STORE_IDENTITY_PUBLIC:
+			singleton->emit_signal("public_key_stored");
+			break;
+		case ZTS_EVENT_STORE_PLANET:
+			singleton->emit_signal("planet_stored");
+			break;
+		case ZTS_EVENT_STORE_PEER:
+			singleton->emit_signal("peer_stored");
+			break;
+		case ZTS_EVENT_STORE_NETWORK:
+			singleton->emit_signal("network_stored");
 			break;
 	}
 }
@@ -136,4 +150,52 @@ String ZeroTierNode::get_ipv6_address(uint64_t networkd_id) {
 	char addr_str[ZTS_IP_MAX_STR_LEN] = { 0 };
 	zts_addr_get_str(networkd_id, ZTS_AF_INET6, addr_str, ZTS_IP_MAX_STR_LEN);
 	return String(addr_str);
+}
+
+void ZeroTierNode::_bind_methods() {
+	ClassDB::bind_static_method("ZeroTierNode", D_METHOD("get_singleton"), &ZeroTierNode::get_singleton);
+
+	ClassDB::bind_method(D_METHOD("init_from_storage"), &ZeroTierNode::init_from_storage);
+	ClassDB::bind_method(D_METHOD("init_from_memory"), &ZeroTierNode::init_from_memory);
+	ClassDB::bind_method(D_METHOD("start"), &ZeroTierNode::start);
+	ClassDB::bind_method(D_METHOD("stop"), &ZeroTierNode::stop);
+	ClassDB::bind_method(D_METHOD("is_online"), &ZeroTierNode::is_online);
+	ClassDB::bind_method(D_METHOD("get_id"), &ZeroTierNode::get_id);
+	ClassDB::bind_method(D_METHOD("join_network"), &ZeroTierNode::join_network);
+	ClassDB::bind_method(D_METHOD("leave_network"), &ZeroTierNode::leave_network);
+	ClassDB::bind_method(D_METHOD("network_transport_is_ready"), &ZeroTierNode::network_transport_is_ready);
+	ClassDB::bind_method(D_METHOD("get_ipv4_address"), &ZeroTierNode::get_ipv4_address);
+	ClassDB::bind_method(D_METHOD("get_ipv6_address"), &ZeroTierNode::get_ipv6_address);
+
+	ADD_SIGNAL(MethodInfo("online"));
+	ADD_SIGNAL(MethodInfo("offline"));
+	ADD_SIGNAL(MethodInfo("down"));
+	ADD_SIGNAL(MethodInfo("joined_network"));
+	ADD_SIGNAL(MethodInfo("denied_network_access"));
+	ADD_SIGNAL(MethodInfo("received_ipv4"));
+	ADD_SIGNAL(MethodInfo("received_ipv6"));
+	ADD_SIGNAL(MethodInfo("network_down"));
+	ADD_SIGNAL(MethodInfo("network_updated"));
+	ADD_SIGNAL(MethodInfo("directed_p2p"));
+	ADD_SIGNAL(MethodInfo("relayed_p2p"));
+	ADD_SIGNAL(MethodInfo("unreachable_p2p"));
+	ADD_SIGNAL(MethodInfo("discovered_p2p"));
+	ADD_SIGNAL(MethodInfo("dead_p2p"));
+	ADD_SIGNAL(MethodInfo("added_route"));
+	ADD_SIGNAL(MethodInfo("removed_route"));
+	ADD_SIGNAL(MethodInfo("received_new_ipv4"));
+	ADD_SIGNAL(MethodInfo("removed_ipv4"));
+	ADD_SIGNAL(MethodInfo("received_new_ipv6"));
+	ADD_SIGNAL(MethodInfo("removed_ipv6"));
+	ADD_SIGNAL(MethodInfo("secret_key_stored"));
+	ADD_SIGNAL(MethodInfo("public_key_stored"));
+	ADD_SIGNAL(MethodInfo("planet_stored"));
+	ADD_SIGNAL(MethodInfo("peer_stored"));
+	ADD_SIGNAL(MethodInfo("network_stored"));
+}
+
+ZeroTierNode::ZeroTierNode() {
+}
+
+ZeroTierNode::~ZeroTierNode() {
 }
