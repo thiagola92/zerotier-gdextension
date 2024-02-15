@@ -1,0 +1,7 @@
+linux/*
+windows/*
+macos/*
+
+!linux/.gitkeep
+!windows/.gitkeep
+!macos/.gitkeep
