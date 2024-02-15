@@ -1,6 +1,5 @@
-# godtier-extension
-This repository is used to generate Godtier GDExtension.  
-Godtier is an extension to use ZeroTier in Godot.  
+# zerotier-extension
+This repository is used to generate ZeroTier GDExtension.  
 
 ### Compile Debug
 ```bash

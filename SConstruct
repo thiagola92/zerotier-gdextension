@@ -21,14 +21,14 @@ env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt"])
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "godtier/bin/libgodtier.{}.{}.framework/libgodtier.{}.{}".format(
+        "test/bin/libzerotier.{}.{}.framework/libzerotier.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "godtier/bin/libgodtier{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "test/bin/libzerotier{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
