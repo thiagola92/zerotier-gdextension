@@ -1,6 +1,6 @@
 #include "register_types.h"
 
-#include "zerotier_node.h"
+#include "zerotier.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -13,7 +13,7 @@ void initialize_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_abstract_class<ZeroTierNode>();
+	ClassDB::register_abstract_class<ZeroTier>();
 }
 
 void uninitialize_module(ModuleInitializationLevel p_level) {

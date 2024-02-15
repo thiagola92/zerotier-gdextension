@@ -1,5 +1,6 @@
 # godtier-extension
-This repository is used to generate the godtier GDExtension.  
+This repository is used to generate Godtier GDExtension.  
+Godtier is an extension to use ZeroTier in Godot.  
 
 ### Compile Debug
 ```bash
@@ -14,6 +15,7 @@ scons target=template_release
 # Submodules
 - `godot-cpp` submodule responsible to generate the GDExtension.
 - `godtier` submodule responsible for testing the GDExtension.
+- `libzt` submodule responsible to compile ZeroTier lib.
 
 ### Update submodules
 ```bash
