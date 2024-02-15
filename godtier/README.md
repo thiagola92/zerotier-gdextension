@@ -1,2 +1,2 @@
 # Godtier
-Repository to test Godtier GDExtension.  
+Directory to test Godtier GDExtension.  

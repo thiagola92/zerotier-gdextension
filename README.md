@@ -14,7 +14,6 @@ scons target=template_release
 
 # Submodules
 - `godot-cpp` submodule to generate the GDExtension.
-- `godtier` submodule for testing the GDExtension.
 - `libzt` submodule to compile ZeroTier lib.
 
 ### Update submodules
