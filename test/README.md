@@ -1,2 +1,2 @@
 # Test
-Directory to test ZeroTier GDExtension.  
+Godot project to test ZeroTier GDExtension.  
