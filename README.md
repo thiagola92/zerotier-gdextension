@@ -1,4 +1,4 @@
-# zerotier-extension
+# zerotier-gdextension
 This repository is used to generate ZeroTier GDExtension.  
 
 ### Compile Debug
