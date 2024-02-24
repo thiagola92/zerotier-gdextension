@@ -71,6 +71,9 @@ In **ZeroTierSockets.h** file, edit the code under the section `ZeroTier Service
 **Note**: Remember to delete files created by previous attempt.  
 
 ## Error 4
+(after running `python3 -m SCons`)  
+
+> Don't remember how to reproduce and I'm not having this issue anymore, but here is the solution that I had.  
 
 ### Explanation
 It will complain if you try to use a library build for debug and another library build for release.  
