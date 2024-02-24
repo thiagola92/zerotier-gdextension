@@ -1,6 +1,8 @@
 # Windows solutions
 Every error and solution while compiling in windows.  
 
+**Note**: Many errors will require you to clean created files, but they are used as cache (there is probably a way to make a clean rerun but I don't know).  
+
 ## Error 1
 (after running `. .\build.ps1; Build-Host -BuildType "Release" -Arch "x64"`)  
 
@@ -67,8 +69,6 @@ In **ZeroTierSockets.h** file, edit the code under the section `ZeroTier Service
 #define ZTCALL
 #endif
 ```
-
-**Note**: Remember to delete files created by previous attempt.  
 
 ## Error 4
 (after running `python3 -m SCons`)  
