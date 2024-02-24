@@ -13,7 +13,10 @@ CMake Error at CMakeLists.txt:2 (project):
   could not find any instance of Visual Studio.
 ```
 
-## Solution
+### Explanation
+Not much to explain, script try to execute Visual Studio from 2019.  
+
+### Solution
 Replace every `Visual Studio 16 2019` in **build.ps1** file, for you Visual Studio information (example: `Visual Studio 17 2022`).
 
 ## Error
@@ -26,7 +29,11 @@ zto_obj.vcxproj]
   (compiling source file '../../ext/ZeroTierOne/node/Bond.cpp')
 ```
 
-## Solution
+### Explanation
+As mentioned by @jbatnozic:  
+> certain headers from ZeroTierOne will try to `#include <nlohmann/json.hpp>` and won't be able to find it so the build will fail. I'm surprised that it even builds without this on other platforms (system package maybe?).
+
+### Solution
 Add `include_directories(${ZTO_SRC_DIR}/ext)` in **CMakeList.txt** file, under the line `# ZeroTier (ext)`.  
 
 ## Error
@@ -37,7 +44,11 @@ Many times mentioning not being able to link to "\_\_imp\_\*".
 zerotier.windows.template_release.x86_64.obj : error LNK2019: unresolved external symbol __imp_zts_init_from_storage referenced in function "public: int __cdecl godot::ZeroTier::init_from_storage(class godot::String)" (?init_from_storage@ZeroTier@godot@@QEAAHVString@2@@Z)
 ```
 
-## Solution
+### Explanation
+In **ZeroTierSockets.h** file, macros for dynamic library (`.dll`) are always being used: `__declspec(dllexport)` and `__declspec(dllimport)`.  
+Even when you are building for static library (`.lib`).  
+
+### Solution
 In **ZeroTierSockets.h** file, edit the code under the section `ZeroTier Service and Network Controls`.  
 
 ```cpp
