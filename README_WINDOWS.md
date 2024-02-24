@@ -1,7 +1,7 @@
 # Windows solutions
 Every error and solution while compiling in windows.  
 
-## Error
+## Error 1
 (after running `. .\build.ps1; Build-Host -BuildType "Release" -Arch "x64"`)  
 
 ```
@@ -19,7 +19,7 @@ Not much to explain, script try to execute Visual Studio from 2019.
 ### Solution
 Replace every `Visual Studio 16 2019` in **build.ps1** file, for you Visual Studio information (example: `Visual Studio 17 2022`).
 
-## Error
+## Error 2
 (after running `. .\build.ps1; Build-Host -BuildType "Release" -Arch "x64"`)  
 
 Many times mentioning missing nlohmann/json.hpp.  
@@ -36,7 +36,7 @@ As mentioned by @jbatnozic:
 ### Solution
 Add `include_directories(${ZTO_SRC_DIR}/ext)` in **CMakeList.txt** file, under the line `# ZeroTier (ext)`.  
 
-## Error
+## Error 3
 (after running `python3 -m SCons`)  
 
 Many times mentioning not being able to link to "\_\_imp\_\*".  
@@ -69,6 +69,16 @@ In **ZeroTierSockets.h** file, edit the code under the section `ZeroTier Service
 ```
 
 **Note**: Remember to delete files created by previous attempt.  
+
+## Error 4
+
+### Explanation
+It will complain if you try to use a library build for debug and another library build for release.  
+
+### Solution
+Build both libraries for release/debug.  
+
+Building for release: `python3 -m SCons target=template_release`  
 
 # References
 - https://github.com/zerotier/libzt/issues/270
