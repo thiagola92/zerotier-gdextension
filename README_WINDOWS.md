@@ -86,3 +86,4 @@ Building for release: `python3 -m SCons target=template_release`
 # References
 - https://github.com/zerotier/libzt/issues/270
 - https://github.com/zerotier/libzt/issues/263
+- https://stackoverflow.com/questions/2728649/error-lnk2005-xxx-already-defined-in-msvcrt-libmsvcr100-dllc-something-libc
