@@ -91,9 +91,9 @@ For example:
 
 ```
 Searching libraries
-    ...
+    Searching godot-cpp\bin\libgodot-cpp.windows.template_release.x86_64.lib:
     Searching lib\zt.lib:
-zt.lib(Controls.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MT_StaticRelease' in ...
+zt.lib(Controls.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MT_StaticRelease' in register_types.windows.template_release.x86_64.obj
 ```
 
 **Explanation**:  
