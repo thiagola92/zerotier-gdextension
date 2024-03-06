@@ -86,6 +86,22 @@ For example:
   - `. .\build.ps1; Build-Host -BuildType "Release" -Arch "x64"`
   - `python3 -m SCons target=template_release`  
 
+## Error 5
+(after running `python3 -m SCons target=template_release`)  
+
+```
+Searching libraries
+    ...
+    Searching lib\zt.lib:
+zt.lib(Controls.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MT_StaticRelease' in ...
+```
+
+**Explanation**:  
+Project *godot-cpp* build a static library and expect that *libzt* also build a static library, but *libzt* is building as dynamic library.  
+
+**Solution**:  
+Replace `__declspec(dllexport)` and `__declspec(dllimport)` for nothing in all *libzt* project and compile it.
+
 # References
 - https://github.com/zerotier/libzt/issues/270
 - https://github.com/zerotier/libzt/issues/263
