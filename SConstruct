@@ -18,7 +18,7 @@ sources = Glob("src/*.cpp")
 
 # ZeroTier
 if env["platform"] == "windows":
-  env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt"], LINKFLAGS=["/VERBOSE:LIB"])
+  env.Append(CCFLAGS=["/Iinclude"], LIBPATH=["lib"], LIBS=["zt"], LINKFLAGS=["/VERBOSE:LIB"])
 else:
   env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt"])
 
