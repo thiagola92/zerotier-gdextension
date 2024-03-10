@@ -1,5 +1,12 @@
 {
     "files.associations": {
         "thread": "cpp"
-    }
+    },
+    "clangd.fallbackFlags": [
+        "-I${workspaceFolder}/src", // Project headers
+        "-I${workspaceFolder}/include", // External headers
+        "-I${workspaceFolder}/godot-cpp/include", // GDExtension headers
+        "-I${workspaceFolder}/godot-cpp/gdextension", // GDExtension interface header
+        "-I${workspaceFolder}/godot-cpp/gen/include", // Generated headers
+    ]
 }
