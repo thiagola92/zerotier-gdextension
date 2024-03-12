@@ -2,10 +2,11 @@
 *.dblite
 
 # Linux
+*.os
 *.so
 
 # Windows
+*.obj
 *.lib
 *.exp
 *.dll
-*.obj
