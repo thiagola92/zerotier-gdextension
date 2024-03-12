@@ -121,20 +121,16 @@ int ZeroTier::init_from_memory(String key) {
 	return zts_init_from_memory((char *)&key, key.length());
 }
 
-int ZeroTier::node_start() {
-	return zts_node_start();
+String ZeroTier::addr_get_ip4(uint64_t net_id) {
+	char addr_str[ZTS_IP_MAX_STR_LEN] = { 0 };
+	zts_addr_get_str(net_id, ZTS_AF_INET, addr_str, ZTS_IP_MAX_STR_LEN);
+	return String(addr_str);
 }
 
-int ZeroTier::node_stop() {
-	return zts_node_stop();
-}
-
-bool ZeroTier::node_is_online() {
-	return zts_node_is_online();
-}
-
-uint64_t ZeroTier::node_get_id() {
-	return zts_node_get_id();
+String ZeroTier::addr_get_ip6(uint64_t net_id) {
+	char addr_str[ZTS_IP_MAX_STR_LEN] = { 0 };
+	zts_addr_get_str(net_id, ZTS_AF_INET6, addr_str, ZTS_IP_MAX_STR_LEN);
+	return String(addr_str);
 }
 
 int ZeroTier::net_join(uint64_t net_id) {
@@ -149,16 +145,20 @@ bool ZeroTier::net_transport_is_ready(uint64_t net_id) {
 	return zts_net_transport_is_ready(net_id);
 }
 
-String ZeroTier::addr_get_ip4(uint64_t net_id) {
-	char addr_str[ZTS_IP_MAX_STR_LEN] = { 0 };
-	zts_addr_get_str(net_id, ZTS_AF_INET, addr_str, ZTS_IP_MAX_STR_LEN);
-	return String(addr_str);
+int ZeroTier::node_start() {
+	return zts_node_start();
 }
 
-String ZeroTier::addr_get_ip6(uint64_t net_id) {
-	char addr_str[ZTS_IP_MAX_STR_LEN] = { 0 };
-	zts_addr_get_str(net_id, ZTS_AF_INET6, addr_str, ZTS_IP_MAX_STR_LEN);
-	return String(addr_str);
+bool ZeroTier::node_is_online() {
+	return zts_node_is_online();
+}
+
+uint64_t ZeroTier::node_get_id() {
+	return zts_node_get_id();
+}
+
+int ZeroTier::node_stop() {
+	return zts_node_stop();
 }
 
 void ZeroTier::_bind_methods() {
@@ -166,15 +166,15 @@ void ZeroTier::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("init_from_storage"), &ZeroTier::init_from_storage);
 	ClassDB::bind_method(D_METHOD("init_from_memory"), &ZeroTier::init_from_memory);
-	ClassDB::bind_method(D_METHOD("node_start"), &ZeroTier::node_start);
-	ClassDB::bind_method(D_METHOD("node_stop"), &ZeroTier::node_stop);
-	ClassDB::bind_method(D_METHOD("node_is_online"), &ZeroTier::node_is_online);
-	ClassDB::bind_method(D_METHOD("node_get_id"), &ZeroTier::node_get_id);
+	ClassDB::bind_method(D_METHOD("addr_get_ip4"), &ZeroTier::addr_get_ip4);
+	ClassDB::bind_method(D_METHOD("addr_get_ip6"), &ZeroTier::addr_get_ip6);
 	ClassDB::bind_method(D_METHOD("net_join"), &ZeroTier::net_join);
 	ClassDB::bind_method(D_METHOD("net_leave"), &ZeroTier::net_leave);
 	ClassDB::bind_method(D_METHOD("net_transport_is_ready"), &ZeroTier::net_transport_is_ready);
-	ClassDB::bind_method(D_METHOD("addr_get_ip4"), &ZeroTier::addr_get_ip4);
-	ClassDB::bind_method(D_METHOD("addr_get_ip6"), &ZeroTier::addr_get_ip6);
+	ClassDB::bind_method(D_METHOD("node_start"), &ZeroTier::node_start);
+	ClassDB::bind_method(D_METHOD("node_is_online"), &ZeroTier::node_is_online);
+	ClassDB::bind_method(D_METHOD("node_get_id"), &ZeroTier::node_get_id);
+	ClassDB::bind_method(D_METHOD("node_stop"), &ZeroTier::node_stop);
 
 	ADD_SIGNAL(MethodInfo("node_up"));
 	ADD_SIGNAL(MethodInfo("node_online"));

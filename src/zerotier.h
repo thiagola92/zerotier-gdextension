@@ -27,17 +27,17 @@ public:
 	int init_from_storage(String path);
 	int init_from_memory(String key);
 
-	int node_start();
-	int node_stop();
-	bool node_is_online();
-	uint64_t node_get_id();
+	String addr_get_ip4(uint64_t networkd_id);
+	String addr_get_ip6(uint64_t networkd_id);
 
 	int net_join(uint64_t networkd_id);
 	int net_leave(uint64_t networkd_id);
 	bool net_transport_is_ready(uint64_t networkd_id);
 
-	String addr_get_ip4(uint64_t networkd_id);
-	String addr_get_ip6(uint64_t networkd_id);
+	int node_start();
+	bool node_is_online();
+	uint64_t node_get_id();
+	int node_stop();
 };
 
 } //namespace godot
