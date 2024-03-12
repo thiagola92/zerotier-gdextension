@@ -1,1 +1,11 @@
+# SCons
 *.dblite
+
+# Linux
+*.so
+
+# Windows
+*.lib
+*.exp
+*.dll
+*.obj

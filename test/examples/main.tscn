@@ -25,6 +25,6 @@ text = "Connect"
 layout_mode = 2
 text = "Stop"
 
-[connection signal="pressed" from="VBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="VBoxContainer/Join" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="VBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="VBoxContainer/Stop" to="." method="_on_stop_pressed"]
