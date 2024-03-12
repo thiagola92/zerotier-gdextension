@@ -17,7 +17,10 @@ env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp")
 
 # ZeroTier
-env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt-shared"], RPATH=["."])
+if env["platform"] == "windows":
+    env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt-shared"], RPATH=["."])
+else:
+    env.Append(CCFLAGS=["-Iinclude"], LIBPATH=["lib"], LIBS=["zt"], RPATH=["."])
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
