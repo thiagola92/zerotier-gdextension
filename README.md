@@ -18,11 +18,23 @@ This repository is used to generate ZeroTier GDExtension.
 - Build
   - Linux: `./build.sh host "release"`
   - Windows: `. .\build.ps1; Build-Host -BuildType "Release" -Arch "x64"`
+- Copy lib
+  - Linux example
+    - `cp dist/linux-x64-host-release/lib/libzt.so ../lib/libzt.so`
+  - Windows example
+    - `cp dist/windows-x64-host-release/lib/libzt.dll ../lib/zt-shared.dll`
+    - `cp dist/windows-x64-host-release/lib/libzt.lib ../lib/zt-shared.lib`
 - `cd ..`
 
 # Compile GDExtension
-- Debug: `scons`
-- Release: `scons target=template_release`
+- Compile
+  - Debug: `scons`
+  - Release: `scons target=template_release`
+- Copy lib to your project binary directory
+  - Linux example
+    - `cp lib/libzt.so test/bin/libzt.so`
+  - Windows example
+    - `cp lib/zt-shared.dll test/bin/zt-shared.dll`
 
 # Submodules
 - `godot-cpp` submodule to generate the GDExtension.
