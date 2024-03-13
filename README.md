@@ -21,7 +21,7 @@ This repository is used to generate ZeroTier GDExtension.
 - Copy lib
   - Linux example
     - `cp dist/linux-x64-host-release/lib/libzt.so ../lib/libzt.so`
-  - Windows example
+  - Windows example (renaming at same time)
     - `cp dist/windows-x64-host-release/lib/libzt.dll ../lib/zt-shared.dll`
     - `cp dist/windows-x64-host-release/lib/libzt.lib ../lib/zt-shared.lib`
 - `cd ..`
